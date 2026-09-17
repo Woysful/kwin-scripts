@@ -1,0 +1,20 @@
+{
+    "KPackageStructure": "KWin/Script",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "Claude"
+            }
+        ],
+        "Name": "Auto Window Resize",
+        "Description": "Resizes a window on mouse move",
+        "Icon": "preferences-system-windows",
+        "Id": "mouseresizer",
+        "Version": "1.0.0",
+        "License": "GPLv3",
+        "Website": ""
+    },
+    "X-Plasma-API": "declarativescript",
+    "X-Plasma-MainScript": "ui/main.qml",
+    "X-KDE-ConfigModule": "kwin/effects/configs/kcm_kwin4_genericscripted"
+}

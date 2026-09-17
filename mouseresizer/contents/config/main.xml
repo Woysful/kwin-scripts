@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0 http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+    <kcfgfile name=""/>
+    <group name="">
+        <entry name="rules" type="String">
+            <default>Default:800x600
+
+firefox,discord,telegram:1200x960
+kitty,ghostty,konsole:1100x900</default>
+        </entry>
+        <entry name="onlyOnce" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="debugLogs" type="Bool">
+            <default>false</default>
+        </entry>
+    </group>
+</kcfg>
