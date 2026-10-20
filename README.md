@@ -35,7 +35,7 @@ each application or for an entire group of applications.
 
 Example:
 ```
-# 0,1,2... - are ID's of your kyboard layouts
+# 0,1,2... - are ID's of your keyboard layouts
 kitty,dolphin,firefox: 0
 telegram, discord: 1
 ```
