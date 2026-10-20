@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>KWin::MouseResizerConfigForm</class>
- <widget class="QWidget" name="KWin::MouseResizerConfigForm">
+ <class>KWin::ResizeWindowOnDragConfigForm</class>
+ <widget class="QWidget" name="KWin::ResizeWindowOnDragConfigForm">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -14,7 +14,7 @@
    <item>
     <widget class="QLabel" name="label_intro">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;One rule per line: &lt;span style=&quot; font-weight:700;&quot;&gt;app1,app2,app3:WIDTHxHEIGHT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Use &lt;span style=&quot; font-weight:700;&quot;&gt;Default:WIDTHxHEIGHT&lt;/span&gt; for windows that don't match any other rule. Remove the Default line to leave unmatched windows untouched.&lt;/p&gt;&lt;p&gt;Example:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:'monospace';&quot;&gt;Default:800x600&lt;br/&gt;&lt;br/&gt;firefox,discord,telegram:1200x960&lt;br/&gt;kitty,ghostty,konsole:1100x900&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;One rule per line: &lt;span style=&quot; font-weight:700;&quot;&gt;app1,app2,app3:WIDTHxHEIGHT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Use &lt;span style=&quot; font-weight:700;&quot;&gt;Default:WIDTHxHEIGHT&lt;/span&gt; for windows that don't match any other rule. Remove the Default line to leave unmatched windows untouched.&lt;/p&gt;&lt;p&gt;Use &lt;span style=&quot; font-weight:700;&quot;&gt;Default-Exception:app1,app2&lt;/span&gt; to list apps that Default must not apply to (they can still have their own rule).&lt;/p&gt;&lt;p&gt;Example:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:'monospace';&quot;&gt;Default:800x600&lt;br/&gt;Default-Exception:vlc,mpv&lt;br/&gt;&lt;br/&gt;firefox,discord,telegram:1200x960&lt;br/&gt;kitty,ghostty,konsole:1100x900&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="textFormat">
       <enum>Qt::TextFormat::RichText</enum>
@@ -42,6 +42,7 @@
      </property>
      <property name="placeholderText">
       <string>Default:800x600
+Default-Exception:vlc,mpv
 
 firefox,discord,telegram:1200x960
 kitty,ghostty,konsole:1100x900</string>

@@ -4,6 +4,7 @@
     <group name="">
         <entry name="rules" type="String">
             <default>Default:800x600
+Default-Exception:vlc,mpv
 
 firefox,discord,telegram:1200x960
 kitty,ghostty,konsole:1100x900</default>

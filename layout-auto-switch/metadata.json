@@ -6,10 +6,10 @@
                 "Name": "Claude"
             }
         ],
-        "Name": "Auto Window Resize",
-        "Description": "Resizes a window on mouse move",
-        "Icon": "preferences-system-windows",
-        "Id": "mouseresizer",
+        "Name": "Layout auto switch",
+        "Description": "Autoswitch keyboard layout on window focus",
+        "Icon": "preferences-desktop-keyboard",
+        "Id": "layout-auto-switch",
         "Version": "1.0.0",
         "License": "GPLv3",
         "Website": ""

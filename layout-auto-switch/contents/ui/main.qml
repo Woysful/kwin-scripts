@@ -19,12 +19,12 @@ Item {
 
     function log(msg) {
         if (debugLogs) {
-            console.log("KeyboardLayoutSwitcher: " + msg);
+            console.log("Layout auto switch: " + msg);
         }
     }
 
     function logE(msg) {
-        console.error("KeyboardLayoutSwitcher: " + msg);
+        console.error("Layout auto switch: " + msg);
     }
 
     // Parses lines like:

@@ -11,29 +11,32 @@ Item {
     property bool debugLogs: false
     property bool onlyOnce: true
     property var defaultSize: null   // { width, height } or null
+    property var defaultExceptions: [] // app patterns that Default must NOT apply to
     property var rules: []           // [{ patterns: ["firefox","discord"], width, height }, ...]
     property var allConnections: []  // cleanup callbacks, one per tracked window
 
     function log(msg) {
         if (debugLogs) {
-            console.log("MouseResizer: " + msg);
+            console.log("Resize window on drag: " + msg);
         }
     }
 
     function logE(msg) {
-        console.error("MouseResizer: " + msg);
+        console.error("Resize window on drag: " + msg);
     }
 
     // Parses lines like:
     //   Default:800x600
+    //   Default-Exception:vlc,mpv      (apps that Default does not apply to)
     //   firefox,discord,telegram:1200x960
     //   # comment lines and blank lines are ignored
     function parseRules(text) {
         const parsedRules = [];
+        const parsedExceptions = [];
         let parsedDefault = null;
 
         if (!text) {
-            return { defaultSize: parsedDefault, rules: parsedRules };
+            return { defaultSize: parsedDefault, rules: parsedRules, exceptions: parsedExceptions };
         }
 
         const lines = text.split(/\r?\n/);
@@ -51,6 +54,21 @@ Item {
 
             const namesPart = line.substring(0, sepIndex).trim();
             const sizePart = line.substring(sepIndex + 1).trim();
+
+            // "Default-Exception:app1,app2" (also accepts "Default-Exceptions",
+            // "Default Exception", "Default_Exception"). No size here.
+            if (/^default[\s_-]*exceptions?$/i.test(namesPart)) {
+                const exc = sizePart
+                    .split(",")
+                    .map(p => p.trim().toLowerCase())
+                    .filter(p => p.length > 0);
+                if (exc.length === 0) {
+                    logE("Skipping malformed exception rule (no app names found): " + line);
+                } else {
+                    for (const e of exc) parsedExceptions.push(e);
+                }
+                continue;
+            }
 
             const sizeMatch = sizePart.match(/^(\d+)\s*[xX×]\s*(\d+)$/);
             if (!sizeMatch) {
@@ -83,7 +101,7 @@ Item {
             parsedRules.push({ patterns: patterns, width: width, height: height });
         }
 
-        return { defaultSize: parsedDefault, rules: parsedRules };
+        return { defaultSize: parsedDefault, rules: parsedRules, exceptions: parsedExceptions };
     }
 
     function loadConfig() {
@@ -93,9 +111,11 @@ Item {
         const parsed = parseRules(KWin.readConfig("rules", ""));
         defaultSize = parsed.defaultSize;
         rules = parsed.rules;
+        defaultExceptions = parsed.exceptions;
 
         log("Configuration loaded: " + rules.length + " rule(s), default=" +
             (defaultSize ? (defaultSize.width + "x" + defaultSize.height) : "none") +
+            ", default exceptions=[" + defaultExceptions.join(", ") + "]" +
             ", onlyOnce=" + onlyOnce);
     }
 
@@ -115,6 +135,17 @@ Item {
             }
         }
 
+        // Nothing matched explicitly: fall back to Default, unless excluded.
+        if (defaultSize) {
+            for (const pattern of defaultExceptions) {
+                if ((resourceClass.length > 0 && resourceClass.indexOf(pattern) !== -1) ||
+                    (resourceName.length > 0 && resourceName.indexOf(pattern) !== -1)) {
+                    log("Default skipped for " + client.resourceClass + " (exception: " + pattern + ")");
+                    return null;
+                }
+            }
+        }
+
         return defaultSize;
     }
 
@@ -127,6 +158,18 @@ Item {
         if (!client.resourceClass) return false;
         if (client.resourceClass.trim().length === 0) return false;
         return true;
+    }
+
+    // Dialogs, message boxes, "are you sure?" windows etc. must keep their own size.
+    // Checked at move time (not only when the window appears), because the
+    // transient-for relation may be set after the window is added.
+    function isDialogLike(client) {
+        if (client.dialog) return true;
+        if (client.transient) return true;
+        if (client.modal) return true;
+        if (client.utility) return true;
+        if (client.transientFor) return true;
+        return false;
     }
 
     // Clamps a requested size to the window's own min/max size constraints, if any.
@@ -147,6 +190,11 @@ Item {
     }
 
     function applySize(client) {
+        if (isDialogLike(client)) {
+            log("Skipping dialog-like window: " + client.resourceClass + " (" + client.caption + ")");
+            return;
+        }
+
         const size = matchWindow(client);
         if (!size) {
             log("No matching rule and no Default set for " + client.resourceClass + ", leaving as is");
