@@ -13,7 +13,7 @@ and place it in `~/.local/share/kwin/scripts/`
 
 ## list of scripts
 
-### Resize window on drag
+### [Resize window on drag](https://github.com/Woysful/kwin-scripts/releases/tag/resize-window-on-drag)
 Script resizes the window as it is dragged with mouse.
 The User specifies the window sizes individually for each application
 or for an entire group of applications in the script's settings. The script automatically attempts to ignore dialog boxes.
@@ -28,7 +28,7 @@ dolphin,zen,thunderbird:1000x770
 kitty,konsole:950x800
 ```
 
-### Layout auto switch
+### [Layout auto switch](https://github.com/Woysful/kwin-scripts/releases/tag/layout-auto-switch)
 Script automatically switches the keyboard layout depending on
 the active window. The user specifies the layout ID individually for
 each application or for an entire group of applications.
