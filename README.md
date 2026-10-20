@@ -1,8 +1,17 @@
 # kwin-scripts
-Set of my KWin scripts for personal use. Feel free to use it if you like it.
+Set of KWin scripts for my personal use. Feel free to use it if you like it.
 
 ## How to install
+You can install scripts in 2 ways:
 
+- Download the script from the release page and drop it in the "KWin scripts" section in the settings.
+
+OR
+
+- Download the entire repository or just the script folders you need,
+and place it in `~/.local/share/kwin/scripts/`
+
+## list of scripts
 
 ### Resize window on drag
 Script resizes the window as it is dragged with mouse.
